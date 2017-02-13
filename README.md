@@ -8,11 +8,11 @@ Base code from Daniel Shiffman, referenced below:
 [YouTube video](https://youtu.be/AaGK-fj-BAM)
 
 ### TO-DOs
-Anticipated objectives to achieve for this basic game, in order.
+Anticipated objectives to achieve for this basic game.
 
+- [x] Game pause
 - [ ] Snake death
 - [ ] Main menu
-- [ ] Game pause
 - [ ] Record highscores
 - [ ] Levels
 - [ ] Different theme (do some polishing)

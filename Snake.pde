@@ -2,7 +2,6 @@
 // Base code from Daniel Shiffman
 // Reference below:
 //
-// Daniel Shiffman
 // http://codingtra.in
 // http://patreon.com/codingtrain
 // Code for: https://youtu.be/AaGK-fj-BAM
