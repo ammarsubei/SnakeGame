@@ -31,12 +31,51 @@ void pickLocation()
 
 void pauseMenu()
 {
+  // Keep displaying the snake and food
+  fill(255, 0, 100);
+  rect(food.x, food.y, scl, scl);
+  s.show();
+  
+  // Transparent background
   fill(0, 60);
   rect(0, 0, width, height);
+  
+  // "Pause" message in the center
   fill(255);
   textSize(50);
   textAlign(CENTER);
   text("PAUSED", 400, 400);
+}
+
+int mainMenu()
+{  
+  Button play;
+  
+  // Declaring button positions
+  int playPosX = width/2;
+  int playPosY = height/2;
+  int playWidth = 70;
+  int playHeight = 30;
+  
+  color c = color(255, 0, 0);
+  color c2 = color(0, 0, 255);
+  
+  play = new Button(playPosX, playPosY, playWidth, playHeight, c, c2);
+  
+  while (true) //<>//
+  {
+    fill(0, 60);
+    rect(0, 0, width, height);
+    
+    play.update();
+    play.show();
+    
+    if (mousePressed)
+      if (play.pressed())
+        break;
+  }
+  
+  return 1;
 }
 
 void mousePressed() 
@@ -53,6 +92,8 @@ void mousePressed()
 
 void draw() 
 {
+  //mainMenu(); //<>//
+  
   if (!paused)
   {
     background(60);
@@ -69,10 +110,7 @@ void draw()
   }
   else
   {
-    background(51);
-    s.show();
-    fill(255, 0, 100);
-    rect(food.x, food.y, scl, scl);
+    background(60);
     pauseMenu();
   }
 }

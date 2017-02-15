@@ -11,7 +11,9 @@ class Snake {
   float y = 0;
   float xspeed = 1;
   float yspeed = 0;
+  
   int total = 0;
+  
   ArrayList<PVector> tail = new ArrayList<PVector>();
 
   Snake() {}
@@ -50,10 +52,21 @@ class Snake {
       }
     }
   }
+  
+  void wrap()
+  {
+    if (x > width-scl)
+      x = 0;
+    if (y > height-scl)
+      y = 0;
+    if (x < 0)
+      x = width-scl;
+    if (y < 0)
+      y = height-scl;
+  }
 
   void update() 
   {
-    //println(total + " " + tail.size());
     if (total > 0) 
     {
       if (total == tail.size() && !tail.isEmpty())
@@ -65,8 +78,8 @@ class Snake {
     x = x + xspeed*scl;
     y = y + yspeed*scl;
 
-    x = constrain(x, 0, width-scl);
-    y = constrain(y, 0, height-scl);
+    // Need to wrap around to other side 
+    wrap();
   }
 
   void show() 
