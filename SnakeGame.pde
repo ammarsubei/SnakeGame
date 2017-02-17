@@ -1,4 +1,5 @@
-// The infamous snake game
+// The infamous snake game //<>//
+//
 // Base code from Daniel Shiffman
 // Reference below:
 //
@@ -7,6 +8,8 @@
 // Code for: https://youtu.be/AaGK-fj-BAM
 
 Snake s;
+Button play;
+
 int scl = 20;
 boolean paused = false;
 
@@ -15,12 +18,24 @@ PVector food;
 void setup() 
 {
   size(800, 800);
+  background(0);
   s = new Snake();
-  frameRate(10);
-  pickLocation();
+  frameRate(15);
+  foodSpawn();
+  
+  // Declaring button positions
+  int playPosX = width/2;
+  int playPosY = height/2;
+  int playWidth = 70;
+  int playHeight = 30;
+
+  color c = color(255, 0, 0);
+  color c2 = color(0, 0, 255);
+
+  play = new Button(playPosX, playPosY, playWidth, playHeight, c, c2);
 }
 
-void pickLocation() 
+void foodSpawn() 
 {
   int cols = width/scl;
   int rows = height/scl;
@@ -35,11 +50,11 @@ void pauseMenu()
   fill(255, 0, 100);
   rect(food.x, food.y, scl, scl);
   s.show();
-  
+
   // Transparent background
   fill(0, 60);
   rect(0, 0, width, height);
-  
+
   // "Pause" message in the center
   fill(255);
   textSize(50);
@@ -48,34 +63,24 @@ void pauseMenu()
 }
 
 int mainMenu()
-{  
-  Button play;
+{
+  fill(255, 0, 0);
+  rect(0, 0, width, height);
   
-  // Declaring button positions
-  int playPosX = width/2;
-  int playPosY = height/2;
-  int playWidth = 70;
-  int playHeight = 30;
-  
-  color c = color(255, 0, 0);
-  color c2 = color(0, 0, 255);
-  
-  play = new Button(playPosX, playPosY, playWidth, playHeight, c, c2);
-  
-  while (true) //<>//
+  while (true)
   {
-    fill(0, 60);
-    rect(0, 0, width, height);
-    
     play.update();
     play.show();
-    
-    if (mousePressed)
-      if (play.pressed())
-        break;
+
+    if (mousePressed && (mouseButton == LEFT))
+    {
+      if (play.hover)
+      {
+        println("Pressed!");
+        return 1;
+      }
+    }
   }
-  
-  return 1;
 }
 
 void mousePressed() 
@@ -92,14 +97,14 @@ void mousePressed()
 
 void draw() 
 {
-  //mainMenu(); //<>//
-  
+  int something = mainMenu();
+
   if (!paused)
   {
     background(60);
 
     if (s.eat(food))
-      pickLocation();
+      foodSpawn();
 
     fill(255, 0, 100);
     rect(food.x, food.y, scl, scl);
@@ -107,7 +112,7 @@ void draw()
     s.death();
     s.update();    
     s.show();
-  }
+  } 
   else
   {
     background(60);
