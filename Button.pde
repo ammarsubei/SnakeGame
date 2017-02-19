@@ -11,20 +11,18 @@
 class Button {
   int posX = 0;
   int posY = 0;
-  int buttonWidth = 0;
-  int buttonHeight = 0;
+  int buttonWidth = 100;
+  int buttonHeight = 50;
 
   color basecolor, highlightcolor;
   color currentcolor;
 
   boolean hover = false;
 
-  Button(int ix, int iy, int iwidth, int iheight, color icolor, color ihighlight)
+  Button(int ix, int iy, color icolor, color ihighlight)
   {
     posX = ix;
     posY = iy;
-    buttonWidth = iwidth;
-    buttonHeight = iheight;
     basecolor = icolor;
     highlightcolor = ihighlight;
     currentcolor = basecolor;
