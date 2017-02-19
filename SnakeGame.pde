@@ -1,17 +1,19 @@
 // The infamous snake game //<>//
-//
 // Base code from Daniel Shiffman
 // Reference below:
 //
 // http://codingtra.in
 // http://patreon.com/codingtrain
 // Code for: https://youtu.be/AaGK-fj-BAM
+//
+// Snake game code
 
 Snake s;
 Button play;
 
 int scl = 20;
 boolean paused = false;
+boolean doneWithMainMenu = false;
 
 PVector food;
 
@@ -22,15 +24,15 @@ void setup()
   s = new Snake();
   frameRate(15);
   foodSpawn();
-  
-  // Declaring button positions
-  int playPosX = width/2;
-  int playPosY = height/2;
-  int playWidth = 70;
-  int playHeight = 30;
 
-  color c = color(255, 0, 0);
-  color c2 = color(0, 0, 255);
+  // Initializing play button
+  int playPosX = 340;
+  int playPosY = 400;
+  int playWidth = 100;
+  int playHeight = 50;
+  
+  color c = color(255);
+  color c2 = color(200);
 
   play = new Button(playPosX, playPosY, playWidth, playHeight, c, c2);
 }
@@ -62,42 +64,55 @@ void pauseMenu()
   text("PAUSED", 400, 400);
 }
 
-int mainMenu()
-{
-  fill(255, 0, 0);
-  rect(0, 0, width, height);
-  
-  while (true)
-  {
-    play.update();
-    play.show();
 
-    if (mousePressed && (mouseButton == LEFT))
+void checkMainMenu()
+{
+  if (mousePressed && (mouseButton == LEFT))
+    if (play.hover)
     {
-      if (play.hover)
-      {
-        println("Pressed!");
-        return 1;
-      }
+      println("Pressed!");
+      doneWithMainMenu = true;
     }
-  }
+}
+
+void drawMainMenu()
+{
+  fill(100);
+  rect(0, 0, width, height);
+
+  play.update();
+  play.show();
+  
+  fill(0);
+  textSize(32);
+  text("PLAY!", 347, 436);
 }
 
 void mousePressed() 
 {
-  if (mouseButton == LEFT)
-    s.total += 2;
-  else if (mouseButton == RIGHT)
-  {
-    println("starting over");
-    s.total = 0;
-    s.tail.clear();
+  if (!doneWithMainMenu)
+    checkMainMenu();
+
+  else
+  {  
+    if (mouseButton == LEFT)
+      s.total += 2;
+    else if (mouseButton == RIGHT)
+    {
+      println("starting over");
+      s.total = 0;
+      s.tail.clear();
+    }
   }
 }
 
 void draw() 
 {
-  int something = mainMenu();
+  if (!doneWithMainMenu)
+  {
+    drawMainMenu();
+    return;
+  }
 
   if (!paused)
   {
@@ -112,8 +127,7 @@ void draw()
     s.death();
     s.update();    
     s.show();
-  } 
-  else
+  } else
   {
     background(60);
     pauseMenu();

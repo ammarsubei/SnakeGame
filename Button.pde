@@ -1,14 +1,24 @@
+// The infamous snake game
+// Base code from Daniel Shiffman
+// Reference below:
+//
+// http://codingtra.in
+// http://patreon.com/codingtrain
+// Code for: https://youtu.be/AaGK-fj-BAM
+//
+// Button class
+
 class Button {
   int posX = 0;
   int posY = 0;
   int buttonWidth = 0;
   int buttonHeight = 0;
-  
+
   color basecolor, highlightcolor;
   color currentcolor;
-  
+
   boolean hover = false;
-  
+
   Button(int ix, int iy, int iwidth, int iheight, color icolor, color ihighlight)
   {
     posX = ix;
@@ -21,17 +31,12 @@ class Button {
     println("Button initialized!");
   }
 
-  boolean pressed() 
-  {
-    return hover;
-  }
-  
   boolean over(int x, int y, int w, int h) 
   {
     if (mouseX >= x && mouseX <= x+w && mouseY >= y && mouseY <= y+h)
     {
-        hover = true;
-        return true;
+      hover = true;
+      return true;
     }
     else
     {
@@ -39,7 +44,7 @@ class Button {
       return false;
     }
   }
-  
+
   void update() 
   {
     if (over(posX, posY, buttonWidth, buttonHeight))
@@ -47,10 +52,10 @@ class Button {
     else
       currentcolor = basecolor;
   }
-  
+
   void show() 
   {
-    rectMode(CENTER);
+    //rectMode(CENTER);
     fill(currentcolor);
     rect(posX, posY, buttonWidth, buttonHeight);
   }

@@ -5,15 +5,17 @@
 // http://codingtra.in
 // http://patreon.com/codingtrain
 // Code for: https://youtu.be/AaGK-fj-BAM
+//
+// Snake class
 
 class Snake {
   float x = 0;
   float y = 0;
   float xspeed = 1;
   float yspeed = 0;
-  
+
   int total = 0;
-  
+
   ArrayList<PVector> tail = new ArrayList<PVector>();
 
   Snake() {}
@@ -21,7 +23,7 @@ class Snake {
   boolean eat(PVector food) 
   {
     float d = dist(x, y, food.x, food.y);
-    
+
     if (d < 1) 
     {
       total++;
@@ -43,7 +45,7 @@ class Snake {
     {
       PVector pos = tail.get(i);
       float d = dist(x, y, pos.x, pos.y);
-      
+
       if (d < 1) 
       {
         println("starting over");
@@ -52,7 +54,7 @@ class Snake {
       }
     }
   }
-  
+
   void wrap()
   {
     if (x > width-scl)
@@ -71,7 +73,7 @@ class Snake {
     {
       if (total == tail.size() && !tail.isEmpty())
         tail.remove(0);
-        
+
       tail.add(new PVector(x, y));
     }
 
@@ -87,7 +89,7 @@ class Snake {
     fill(255);
     for (PVector v : tail)
       rect(v.x, v.y, scl, scl);
-      
+
     rect(x, y, scl, scl);
   }
 }
