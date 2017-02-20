@@ -50,7 +50,6 @@ class Snake {
       {
         total = 0;
         tail.clear();
-        println("Starting over");
         return true;
       }
     }

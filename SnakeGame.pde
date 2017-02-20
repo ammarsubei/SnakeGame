@@ -141,7 +141,7 @@ void mousePressed()
       player.total += 2;
     else if (mouseButton == RIGHT)
     {
-      println("starting over");
+      println("Starting over");
       player.total = 0;
       player.tail.clear();
     }
