@@ -13,7 +13,8 @@ Button exit;
 
 int scl = 20;
 boolean paused = false;
-boolean doneWithMainMenu = false;
+boolean doneWithMenu = false;
+boolean isDead = false;
 
 PVector food;
 
@@ -39,6 +40,8 @@ void setup()
   
 }
 
+
+// Chooses a random spot to spawn new food
 void foodSpawn() 
 {
   int cols = width/scl;
@@ -48,6 +51,8 @@ void foodSpawn()
   food.mult(scl);
 }
 
+
+// Pauses the game from updating snake movement
 void pauseMenu()
 {
   // Keep displaying the snake and food
@@ -64,21 +69,27 @@ void pauseMenu()
   textSize(50);
   textAlign(CENTER);
   text("PAUSED", width/2, height/2);
-  
+
+  // Option for user to enter main menu
   textSize(30);
   textAlign(CENTER);
   text("Press 'SPACE' for main menu", width/2, 500);
 }
 
 
-void checkMainMenu()
+// Checks for button presses in main menu
+void checkButtonPress()
 {
   if (mousePressed && (mouseButton == LEFT))
+  {
+    // Play button
     if (play.hover)
-      doneWithMainMenu = true;
+      doneWithMenu = true;
       
+    // Exit button
     if (exit.hover)
       exit();
+  }
 }
 
 void drawMainMenu()
@@ -106,11 +117,24 @@ void drawMainMenu()
   text("EXIT", exit.posX+(exit.buttonWidth/2), exit.posY+(exit.buttonHeight/2));
 }
 
+void playerDied()
+{  
+  fill(0);
+  rect(0, 0, width, height);
+  
+  fill(255);
+  textSize(30);
+  textAlign(CENTER);
+  text("You lost. Press SPACE to go to the main menu.", width/2, height/2);
+}
+
 void mousePressed() 
 {
-  if (!doneWithMainMenu)
-    checkMainMenu();
-
+  // Deal with menu buttons
+  if (!doneWithMenu)
+    checkButtonPress();
+  
+  // Deal with in-game presses
   else
   {  
     if (mouseButton == LEFT)
@@ -126,12 +150,20 @@ void mousePressed()
 
 void draw() 
 {
-  if (!doneWithMainMenu)
+  // Main menu
+  if (!doneWithMenu)
   {
     drawMainMenu();
     return;
   }
+  
+  if (isDead)
+  {
+    playerDied();
+    return;
+  }
 
+  // Normal game play
   if (!paused)
   {
     background(60);
@@ -142,10 +174,13 @@ void draw()
     fill(255, 0, 100);
     rect(food.x, food.y, scl, scl);
 
-    player.death();
+    isDead = player.death();
     player.update();    
     player.show();
-  } else
+  } 
+  
+  // Pause menu
+  else
   {
     background(60);
     pauseMenu();
@@ -155,8 +190,11 @@ void draw()
 
 void keyPressed() 
 {
-  if (!paused)
+  // If the game is not paused or player is alive
+  if (!paused && !isDead)
   {
+    // Keep playing and read arrow keys
+    
     if (keyCode == UP)
     {
       if (player.yspeed != 1)
@@ -177,13 +215,18 @@ void keyPressed()
   }
   else
   {
+    // Otherwise press space to go back to main menu
     if (key == ' ')
     {
       player = new Snake();
       paused = false;
-      doneWithMainMenu = false;
+      doneWithMenu = false;
+      isDead = false;
     }
   }
-  if (key == ENTER || key == RETURN)
-    paused = !paused;
+  
+  // Allow user to pause after game starts
+  if (doneWithMenu)
+    if (key == ENTER || key == RETURN)
+      paused = !paused;
 }

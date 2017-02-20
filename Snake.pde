@@ -39,7 +39,7 @@ class Snake {
     yspeed = y;
   }
 
-  void death() 
+  boolean death() 
   {
     for (int i = 0; i < tail.size(); i++) 
     {
@@ -48,11 +48,13 @@ class Snake {
 
       if (d < 1) 
       {
-        println("starting over");
         total = 0;
         tail.clear();
+        println("Starting over");
+        return true;
       }
     }
+    return false;
   }
 
   void wrap()
