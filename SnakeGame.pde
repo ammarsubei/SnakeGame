@@ -7,7 +7,6 @@
 // Code for: https://youtu.be/AaGK-fj-BAM
 //
 // Snake game code
-
 Snake player;
 Button play;
 Button exit;
@@ -27,15 +26,15 @@ void setup()
   foodSpawn();
 
   // Initializing play button
-  int playPosX = 340;
-  int playPosY = 350;
+  int playPosX = 350;
+  int playPosY = 325;
   color c = color(255);
   color c2 = color(200);
   play = new Button(playPosX, playPosY, c, c2);
   
   // Initializing exit button
-  int exitPosX = 340;
-  int exitPosY = 420;
+  int exitPosX = 350;
+  int exitPosY = 400;
   exit = new Button(exitPosX, exitPosY, c, c2);
   
 }
@@ -64,7 +63,11 @@ void pauseMenu()
   fill(255);
   textSize(50);
   textAlign(CENTER);
-  text("PAUSED", 400, 400);
+  text("PAUSED", width/2, height/2);
+  
+  textSize(30);
+  textAlign(CENTER);
+  text("Press 'SPACE' for main menu", width/2, 500);
 }
 
 
@@ -88,12 +91,18 @@ void drawMainMenu()
   play.show();
   exit.show();
   
+  fill(255);
+  textSize(100);
+  textAlign(CENTER, CENTER);
+  text("SNAKE", width/2, 100);
+  textSize(30);
+  textAlign(CENTER, CENTER);
+  text("By Ammar Subei", width/2, 200);
+  
   fill(0);
-  textSize(32);
+  textSize(30);
   textAlign(CENTER, CENTER);
   text("PLAY!", play.posX+(play.buttonWidth/2), play.posY+(play.buttonHeight/2));
-  fill(0);
-  textSize(32);
   text("EXIT", exit.posX+(exit.buttonWidth/2), exit.posY+(exit.buttonHeight/2));
 }
 
@@ -164,6 +173,15 @@ void keyPressed()
     {
       if (player.xspeed != 1)
         player.direction(-1, 0);
+    }
+  }
+  else
+  {
+    if (key == ' ')
+    {
+      player = new Snake();
+      paused = false;
+      doneWithMainMenu = false;
     }
   }
   if (key == ENTER || key == RETURN)

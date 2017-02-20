@@ -12,8 +12,8 @@ Base code from Daniel Shiffman, referenced below:
 Anticipated objectives to achieve for this basic game.
 
 - [x] Game pause
+- [x] Main menu
 - [ ] Snake death
-- [ ] Main menu
 - [ ] Record highscores
-- [ ] Levels
 - [ ] Different theme (do some polishing)
+- [ ] Multiple levels
